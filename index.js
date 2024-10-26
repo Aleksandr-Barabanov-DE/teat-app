@@ -1,87 +1,102 @@
+// 1. Глобальные переменные
 const products = document.querySelectorAll(".product");
 const cart = document.querySelector(".cart");
 let itemCount = 0;
 let isItemDropped = false;
 let touchStartX, touchStartY;
 
-// Проверка на сенсорное устройство
+// 2. Проверка на сенсорное устройство
 function isTouchDevice() {
   return "ontouchstart" in window || navigator.maxTouchPoints > 0;
 }
 
-// Универсальные обработчики для сенсорных устройств и десктопов
+// 3. Универсальные обработчики событий для перетаскивания
 products.forEach((product) => {
-  if (isTouchDevice()) {
-    // Для сенсорных устройств
-    product.addEventListener("touchstart", (e) => {
-      const touch = e.touches[0];
-      touchStartX = touch.clientX;
-      touchStartY = touch.clientY;
-      product.classList.add("dragging");
-      isItemDropped = false;
-    });
-
-    product.addEventListener(
-      "touchmove",
-      (e) => {
-        e.preventDefault();
-        const touch = e.touches[0];
-        // Перемещение с использованием CSS-трансформаций
-        product.style.transform = `translate(${
-          touch.clientX - touchStartX
-        }px, ${touch.clientY - touchStartY}px)`;
-      },
-      { passive: false }
-    );
-
-    product.addEventListener("touchend", (e) => {
-      const touch = e.changedTouches[0];
-      if (isTouchOverCart(touch)) {
-        handleDrop(product);
-      } else {
-        resetProductStyles(product);
-      }
-      product.classList.remove("dragging");
-      product.style.transform = "";
-    });
-  } else {
-    // Обработка для десктопов и touchpad
-    product.addEventListener("mousedown", (e) => {
-      e.preventDefault();
-      touchStartX = e.clientX;
-      touchStartY = e.clientY;
-      product.classList.add("dragging");
-      isItemDropped = false;
-
-      // Обработчики для перемещения
-      const mouseMoveHandler = (eMove) => {
-        product.style.transform = `translate(${
-          eMove.clientX - touchStartX
-        }px, ${eMove.clientY - touchStartY}px)`;
-      };
-
-      const mouseUpHandler = (eEnd) => {
-        if (isMouseOverCart(eEnd)) {
-          handleDrop(product);
-        } else {
-          resetProductStyles(product);
-        }
-        document.removeEventListener("mousemove", mouseMoveHandler);
-        document.removeEventListener("mouseup", mouseUpHandler);
-        product.classList.remove("dragging");
-        product.style.transform = "";
-      };
-
-      document.addEventListener("mousemove", mouseMoveHandler);
-      document.addEventListener("mouseup", mouseUpHandler);
-    });
-  }
+  addDragEvents(product);
 });
 
-// Проверка, находится ли элемент над корзиной при касании
+function addDragEvents(product) {
+  if (isTouchDevice()) {
+    addTouchEvents(product);
+  } else {
+    addMouseEvents(product);
+  }
+}
+
+function addTouchEvents(product) {
+  product.addEventListener("touchstart", (e) => startTouchDrag(e, product));
+  product.addEventListener("touchmove", (e) => moveTouchDrag(e, product), {
+    passive: false,
+  });
+  product.addEventListener("touchend", (e) => endTouchDrag(e, product));
+}
+
+function addMouseEvents(product) {
+  product.addEventListener("mousedown", (e) => startMouseDrag(e, product));
+}
+
+// 4. Функции для обработки сенсорного перетаскивания
+function startTouchDrag(e, product) {
+  const touch = e.touches[0];
+  touchStartX = touch.clientX;
+  touchStartY = touch.clientY;
+  product.classList.add("dragging");
+  isItemDropped = false;
+}
+
+function moveTouchDrag(e, product) {
+  e.preventDefault();
+  const touch = e.touches[0];
+  product.style.transform = `translate(${touch.clientX - touchStartX}px, ${
+    touch.clientY - touchStartY
+  }px)`;
+}
+
+function endTouchDrag(e, product) {
+  const touch = e.changedTouches[0];
+  if (isTouchOverCart(touch)) {
+    handleDrop(product);
+  } else {
+    resetProductStyles(product);
+  }
+  product.classList.remove("dragging");
+  product.style.transform = "";
+}
+
+// 5. Функции для обработки десктопного перетаскивания
+function startMouseDrag(e, product) {
+  e.preventDefault();
+  touchStartX = e.clientX;
+  touchStartY = e.clientY;
+  product.classList.add("dragging");
+  isItemDropped = false;
+
+  const mouseMoveHandler = (eMove) => {
+    product.style.transform = `translate(${eMove.clientX - touchStartX}px, ${
+      eMove.clientY - touchStartY
+    }px)`;
+  };
+
+  const mouseUpHandler = (eEnd) => {
+    if (isMouseOverCart(eEnd)) {
+      handleDrop(product);
+    } else {
+      resetProductStyles(product);
+    }
+    document.removeEventListener("mousemove", mouseMoveHandler);
+    document.removeEventListener("mouseup", mouseUpHandler);
+    product.classList.remove("dragging");
+    product.style.transform = "";
+  };
+
+  document.addEventListener("mousemove", mouseMoveHandler);
+  document.addEventListener("mouseup", mouseUpHandler);
+}
+
+// 6. Проверка на нахождение над корзиной
 function isTouchOverCart(touch) {
   const cartRect = cart.getBoundingClientRect();
-  const threshold = 100; // Установим порог в 100 пикселей
+  const threshold = 100;
 
   return (
     touch.clientX >= cartRect.left - threshold &&
@@ -91,10 +106,9 @@ function isTouchOverCart(touch) {
   );
 }
 
-// Проверка, находится ли мышь над корзиной
 function isMouseOverCart(mouseEvent) {
   const cartRect = cart.getBoundingClientRect();
-  const threshold = 100; // Установим порог в 100 пикселей
+  const threshold = 100;
 
   return (
     mouseEvent.clientX >= cartRect.left - threshold &&
@@ -104,17 +118,14 @@ function isMouseOverCart(mouseEvent) {
   );
 }
 
+// 7. Обработка добавления товара в корзину
 function handleDrop(product) {
   isItemDropped = true;
   const newItem = createCartItem(product);
-
-  // Добавляем новый товар в корзину
   cart.appendChild(newItem);
   itemCount++;
 
   updateProductStyles(product);
-
-  // Обновляем отображение товаров в корзине
   limitCartItemsDisplay();
 
   // Показываем кнопку "Оплатить корзину" при добавлении 3-х или более товаров
@@ -123,12 +134,7 @@ function handleDrop(product) {
   }
 }
 
-function resetProductStyles(product) {
-  product.classList.remove("dragging");
-  product.style.visibility = "visible";
-  product.style.transform = "";
-}
-
+// 8. Создание элемента корзины
 function createCartItem(draggingElement) {
   const imgSrc = draggingElement.getAttribute("src");
   const newItem = document.createElement("div");
@@ -147,6 +153,7 @@ function createCartItem(draggingElement) {
   return newItem;
 }
 
+// 9. Применение эффектов к изображениям
 function applyImageEffects(img, altText) {
   const effects = {
     вина: "rotate(2deg) translateY(5px) scale(0.8)",
@@ -154,7 +161,7 @@ function applyImageEffects(img, altText) {
     варенья: "rotate(2deg) translateY(5px)",
     сыра: "rotate(15deg) translateY(9px)",
     мяса: "rotate(30deg) translateY(15px) scale(0.8)",
-    курицы: " translateY(15px) rotate(-30deg)  scale(0.8)",
+    курицы: "translateY(15px) rotate(-30deg) scale(0.8)",
     чипсов: "scale(0.8) rotate(-40deg) translateX(-10px)",
     ананаса: "rotate(7deg) translate(8px)",
     бананов: "rotate(-27deg) translateY(6px) scale(1.05)",
@@ -169,35 +176,43 @@ function applyImageEffects(img, altText) {
   }
 }
 
+// 10. Обновление стилей продукта
 function updateProductStyles(product) {
   product.classList.add("in-cart");
   product.classList.remove("dragging");
   product.style.visibility = "hidden";
 }
 
+// 11. Сброс стилей продукта
+function resetProductStyles(product) {
+  product.classList.remove("dragging");
+  product.style.visibility = "visible";
+  product.style.transform = "";
+}
+
+// 12. Ограничение отображения товаров в корзине
 function limitCartItemsDisplay() {
   const cartItems = cart.querySelectorAll(".cart-item");
-
   // Отображаем только последние три добавленных элемента
   cartItems.forEach((item, index) => {
     item.style.display = index >= cartItems.length - 3 ? "block" : "none";
   });
 }
 
+// 13. Показ кнопки "Оплатить корзину"
 function showCheckoutButton() {
   if (!document.querySelector(".checkout-button")) {
     const checkoutButton = document.createElement("button");
     checkoutButton.textContent = "Оплатить корзину";
-    checkoutButton.className = "checkout-button";
-    checkoutButton.classList.add("blinking");
+    checkoutButton.className = "checkout-button blinking";
     checkoutButton.onclick = () =>
       (window.location.href = "https://lavka.yandex.ru/");
     cart.appendChild(checkoutButton);
   }
 }
 
+// 14. Инициализация анимации при загрузке страницы
 document.addEventListener("DOMContentLoaded", () => {
-  const products = document.querySelectorAll(".product");
   products.forEach((product, index) => {
     product.style.animationDelay = `${index * 0.2}s`; // Устанавливаем задержку для каждого продукта
     product.classList.add("fade-in"); // Добавляем класс для анимации
