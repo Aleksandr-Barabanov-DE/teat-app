@@ -44,8 +44,9 @@ body {
 }
 
 .product {
+  opacity: 0;
   cursor: pointer;
-  transition: transform 0.3s ease;
+  transition: transform 0.15s ease;
 }
 
 .product.dragging {
@@ -86,6 +87,20 @@ body {
 .checkout-button:active {
   background-color: #d0b506; /* Цвет фона при нажатии */
   transform: translate(-50%, 0) scale(0.95); /* Уменьшение при нажатии */
+}
+
+.blinking {
+  animation: blink-animation 2.5s ease-in-out infinite;
+}
+
+@keyframes blink-animation {
+  0%,
+  100% {
+    opacity: 1; /* Полная видимость */
+  }
+  50% {
+    opacity: 0; /* Полная прозрачность */
+  }
 }
 
 .fade-in {

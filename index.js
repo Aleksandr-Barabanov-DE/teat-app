@@ -81,7 +81,7 @@ products.forEach((product) => {
 // Проверка, находится ли элемент над корзиной при касании
 function isTouchOverCart(touch) {
   const cartRect = cart.getBoundingClientRect();
-  const threshold = 50; // Установим порог в 50 пикселей
+  const threshold = 100; // Установим порог в 100 пикселей
 
   return (
     touch.clientX >= cartRect.left - threshold &&
@@ -94,7 +94,7 @@ function isTouchOverCart(touch) {
 // Проверка, находится ли мышь над корзиной
 function isMouseOverCart(mouseEvent) {
   const cartRect = cart.getBoundingClientRect();
-  const threshold = 50; // Установим порог в 50 пикселей
+  const threshold = 100; // Установим порог в 100 пикселей
 
   return (
     mouseEvent.clientX >= cartRect.left - threshold &&
@@ -189,8 +189,17 @@ function showCheckoutButton() {
     const checkoutButton = document.createElement("button");
     checkoutButton.textContent = "Оплатить корзину";
     checkoutButton.className = "checkout-button";
+    checkoutButton.classList.add("blinking");
     checkoutButton.onclick = () =>
       (window.location.href = "https://lavka.yandex.ru/");
     cart.appendChild(checkoutButton);
   }
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  const products = document.querySelectorAll(".product");
+  products.forEach((product, index) => {
+    product.style.animationDelay = `${index * 0.2}s`; // Устанавливаем задержку для каждого продукта
+    product.classList.add("fade-in"); // Добавляем класс для анимации
+  });
+});
