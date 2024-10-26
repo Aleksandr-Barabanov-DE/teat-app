@@ -1,0 +1,31 @@
+.checkout-button {
+  animation: fadeIn 0.3s ease-in;
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translate(-50%, 0);
+  background-color: var(--button-color);
+  border: none;
+  cursor: pointer;
+  padding: var(--checkout-button-padding);
+  color: var(--button-text-color);
+  border-radius: var(--checkout-button-border-radius);
+  line-height: 17px;
+  letter-spacing: -0.5%;
+  font-size: 16px;
+  z-index: 5;
+  min-width: 130px;
+  white-space: nowrap;
+  font-family: var(--font-family);
+}
+
+.checkout-button:hover {
+  background-color: #f0d107;
+  transform: translate(-50%, 0) scale(1.01);
+  animation: none;
+}
+
+.checkout-button:active {
+  background-color: #d0b506;
+  transform: translate(-50%, 0) scale(0.95);
+}

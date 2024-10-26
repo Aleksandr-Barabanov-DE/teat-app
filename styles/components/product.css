@@ -1,0 +1,15 @@
+.product {
+  opacity: 0;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.product.dragging {
+  opacity: var(--product-opacity);
+  transform: scale(1.2);
+}
+
+.product.in-cart {
+  opacity: 0;
+  pointer-events: none;
+}

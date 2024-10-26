@@ -1,0 +1,11 @@
+@font-face {
+  font-family: "YS Text";
+  src: url("fonts/YS Text-Medium.woff") format("woff");
+  font-weight: 500;
+  font-style: normal;
+}
+
+body {
+  min-height: 100dvh;
+  font-family: var(--font-family);
+}

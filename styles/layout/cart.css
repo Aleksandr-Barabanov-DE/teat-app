@@ -1,0 +1,26 @@
+.cart {
+  display: flex;
+  margin: auto;
+  margin-bottom: var(--cart-margin-bottom);
+  min-height: var(--cart-min-height);
+  min-width: var(--cart-min-width);
+  max-width: var(--cart-max-width);
+  align-items: flex-end;
+  padding: 10px;
+}
+
+.cart-img {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin: 0 12px;
+  z-index: 2;
+}
+
+.cart-items {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 3px;
+}

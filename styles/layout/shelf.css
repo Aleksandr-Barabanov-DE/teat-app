@@ -1,0 +1,38 @@
+.display {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  margin: 28px auto 0;
+}
+
+.shelf {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+}
+
+.row {
+  display: flex;
+  align-items: flex-end;
+}
+
+.first-row {
+  justify-content: center;
+  gap: 5px;
+  margin-bottom: 43px;
+}
+
+.second-row {
+  display: flex;
+  justify-content: center;
+  margin-left: -5px;
+}
+
+.third-row {
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-left: 15px;
+}

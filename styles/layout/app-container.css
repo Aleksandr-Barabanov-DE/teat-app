@@ -1,0 +1,7 @@
+.app-container {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: var(--container-width);
+  height: var(--container-height);
+}

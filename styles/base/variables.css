@@ -1,0 +1,14 @@
+:root {
+  --button-color: #fce000;
+  --button-text-color: #21201f;
+  --font-family: "YS Text", sans-serif;
+  --container-width: 300px;
+  --container-height: 600px;
+  --product-opacity: 0.5;
+  --checkout-button-padding: 16px 18px;
+  --checkout-button-border-radius: 16px;
+  --cart-margin-bottom: 53px;
+  --cart-min-height: 50px;
+  --cart-min-width: 130px;
+  --cart-max-width: 130px;
+}
