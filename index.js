@@ -1,3 +1,7 @@
+import { createShelfSection } from "./scripts/shelf-section.js";
+
+createShelfSection();
+
 // 1. Глобальные переменные
 const products = document.querySelectorAll(".product");
 const cart = document.querySelector(".cart");

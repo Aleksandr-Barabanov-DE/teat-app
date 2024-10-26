@@ -10,10 +10,8 @@
   <body>
     <header>
       <h1>Продуктовая Витрина</h1>
-      <!-- Заголовок для улучшения семантики -->
     </header>
     <main class="app-container">
-      <!-- Используем <main> для основного контента -->
       <section class="display" aria-labelledby="display-heading">
         <h2 id="display-heading" class="visually-hidden">
           Витрина с продуктами
@@ -23,93 +21,16 @@
           alt="Витрина с продуктами"
           class="display-img"
         />
-        <div class="shelf">
-          <div class="row first-row">
-            <img
-              src="images/bottle.svg"
-              alt="Изображение бутылки вина"
-              class="product"
-              draggable="true"
-            />
-            <img
-              src="images/milk.svg"
-              alt="Изображение упаковки молока"
-              class="product"
-              draggable="true"
-            />
-            <img
-              src="images/jam.svg"
-              alt="Изображение банки варенья"
-              class="product"
-              draggable="true"
-            />
-            <img
-              src="images/cheese.svg"
-              alt="Изображение куска сыра"
-              class="product"
-              draggable="true"
-            />
-          </div>
-          <div class="row second-row">
-            <img
-              src="images/meat.svg"
-              alt="Изображение кусочка мяса"
-              class="product"
-              draggable="true"
-            />
-            <img
-              src="images/chicken.svg"
-              alt="Изображение курицы"
-              class="product"
-              draggable="true"
-            />
-            <img
-              src="images/chips.svg"
-              alt="Изображение пачки чипсов"
-              class="product"
-              draggable="true"
-            />
-          </div>
-          <div class="row third-row">
-            <img
-              src="images/ananas.svg"
-              alt="Изображение ананаса"
-              class="product"
-              draggable="true"
-            />
-            <img
-              src="images/bananas.svg"
-              alt="Изображение бананов"
-              class="product"
-              draggable="true"
-            />
-            <img
-              src="images/apple.svg"
-              alt="Изображение яблока"
-              class="product"
-              draggable="true"
-            />
-            <img
-              src="images/green.svg"
-              alt="Изображение зелени"
-              class="product"
-              draggable="true"
-            />
-          </div>
-        </div>
       </section>
       <aside class="cart" aria-labelledby="cart-heading">
         <h2 id="cart-heading" class="visually-hidden">Корзина</h2>
-        <!-- Используем <aside> для корзины -->
         <img src="images/card.svg" alt="Изображение корзины" class="cart-img" />
         <div class="cart-items" aria-live="polite"></div>
-        <!-- Контейнер для продуктов в корзине -->
       </aside>
     </main>
     <footer>
       <p>© 2024 Продуктовая Витрина</p>
-      <!-- Добавил футер для завершения структуры страницы -->
     </footer>
-    <script src="index.js"></script>
+    <script type="module" src="index.js"></script>
   </body>
 </html>
