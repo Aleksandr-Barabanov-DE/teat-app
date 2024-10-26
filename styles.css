@@ -81,6 +81,7 @@ body {
 .checkout-button:hover {
   background-color: #f0d107; /* Цвет фона при наведении */
   transform: translate(-50%, 0) scale(1.01); /* Увеличение при наведении */
+  animation: none; /* Остановка анимации при наведении */
 }
 
 /* Эффект при нажатии */
