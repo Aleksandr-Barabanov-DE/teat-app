@@ -29,6 +29,10 @@
   margin-left: -5px;
 }
 
+.second-row img:nth-child(2) {
+  margin-bottom: -10px;
+}
+
 .third-row {
   margin-top: 15px;
   display: flex;
