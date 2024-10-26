@@ -97,20 +97,24 @@ function startMouseDrag(e, product, cart) {
 // Helper functions for checking if item is over cart
 function isTouchOverCart(touch, cart) {
   const cartRect = cart.getBoundingClientRect();
+  const padding = 100;
+
   return (
-    touch.clientX >= cartRect.left &&
-    touch.clientX <= cartRect.right &&
-    touch.clientY >= cartRect.top &&
-    touch.clientY <= cartRect.bottom
+    touch.clientX >= cartRect.left - padding &&
+    touch.clientX <= cartRect.right + padding &&
+    touch.clientY >= cartRect.top - padding &&
+    touch.clientY <= cartRect.bottom + padding
   );
 }
 
 function isMouseOverCart(mouseEvent, cart) {
   const cartRect = cart.getBoundingClientRect();
+  const padding = 100;
+
   return (
-    mouseEvent.clientX >= cartRect.left &&
-    mouseEvent.clientX <= cartRect.right &&
-    mouseEvent.clientY >= cartRect.top &&
-    mouseEvent.clientY <= cartRect.bottom
+    mouseEvent.clientX >= cartRect.left - padding &&
+    mouseEvent.clientX <= cartRect.right + padding &&
+    mouseEvent.clientY >= cartRect.top - padding &&
+    mouseEvent.clientY <= cartRect.bottom + padding
   );
 }

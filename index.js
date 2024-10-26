@@ -13,7 +13,7 @@ initializeDragAndDrop(products, cart);
 // Additional logic for initializing animations on page load
 document.addEventListener("DOMContentLoaded", () => {
   products.forEach((product, index) => {
-    product.style.animationDelay = `${index * 0.2}s`;
+    product.style.animationDelay = `${index * 0.1}s`;
     product.classList.add("fade-in");
   });
 });
